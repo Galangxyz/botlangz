@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-const axios = require("axios");
+import express from "express";
+import cors from "cors";
+import axios from "axios";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,7 +14,7 @@ app.post("/chat", async (req, res) => {
 
   try {
     const response = await axios.post("http://localhost:11434/api/generate", {
-      model: "mistral", // Bisa ganti ke "gemma" atau model lain
+      model: "mistral",
       prompt: userMessage,
       stream: false,
     });
