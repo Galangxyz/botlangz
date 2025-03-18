@@ -13,11 +13,16 @@ app.post("/chat", async (req, res) => {
   if (!userMessage) return res.status(400).json({ error: "Pesan tidak boleh kosong" });
 
   try {
-    const response = await axios.post("http://localhost:11434/api/generate", {
-      model: "mistral",
-      prompt: userMessage,
-      stream: false,
-    });
+   const response = await axios.post("https://api.openai.com/v1/chat/completions", {
+  model: "gpt-3.5-turbo", // Bisa diganti dengan model lain, misalnya "gpt-4"
+  messages: [{ role: "user", content: userMessage }],
+  stream: false,
+}, {
+  headers: {
+    "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+    "Content-Type": "application/json"
+  }
+});
 
     res.json({ reply: `LangzBot: ${response.data.response}` });
   } catch (error) {
